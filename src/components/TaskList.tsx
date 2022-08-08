@@ -15,13 +15,23 @@ export const TaskList = () => {
       title: "Beber agua",
       isComplete: false,
     },
+    {
+      id: 1,
+      title: "Malhar",
+      isComplete: false,
+    },
+    {
+      id: 2,
+      title: "Ler 10min",
+      isComplete: false,
+    },
   ]);
   const [newTask, setNewTaskList] = useState();
 
   const handleToggleTaskComplete = (id: number) => {
     setTasks(
       tasks.map((task) =>
-        task.id === task.id ? { ...task, isComplete: !task.isComplete } : task
+        task.id === id ? { ...task, isComplete: !task.isComplete } : task
       )
     );
   };
@@ -39,10 +49,13 @@ export const TaskList = () => {
       <main className={styles.taskList}>
         <div className={styles.info}>
           <p>
-            Tarefas criadas <span>0</span>
+            Tarefas criadas <span>{tasks.length}</span>
           </p>
           <p>
-            Concluidas <span>0</span>
+            Concluidas{" "}
+            <span>
+              {tasks.filter((item) => item.isComplete === true).length}
+            </span>
           </p>
         </div>
 
