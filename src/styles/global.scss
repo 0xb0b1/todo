@@ -23,26 +23,25 @@
 
 body {
   font: 16px "Inter", Arial, sans-serif;
-  // color: #121214;
+  color: var(--gray-100);
+  background: var(--gray-500);
 }
 
 input,
-textarea {
+textarea,
+button {
   font-family: "Inter";
 }
 
-.container {
-  max-width: 1120px;
-  margin: 0 auto;
-  padding: 2.5rem 1rem;
-}
-
-button,
-.checkmark {
+button {
   cursor: pointer;
 }
 
 button,
 input {
   border-radius: 8px;
+}
+
+li {
+  list-style: none;
 }
