@@ -1,5 +1,5 @@
 import { PlusCircle } from "phosphor-react";
-import { useState } from "react";
+import { SetStateAction, useState } from "react";
 import styles from "./tasklist.module.scss";
 
 interface Task {
@@ -26,7 +26,7 @@ export const TaskList = () => {
       isComplete: false,
     },
   ]);
-  const [newTask, setNewTaskList] = useState();
+  const [newTask, setNewTask] = useState<string>("");
 
   const handleToggleTaskComplete = (id: number) => {
     setTasks(
@@ -36,11 +36,29 @@ export const TaskList = () => {
     );
   };
 
+  const handleCreateTask = (title: string) => {
+    if (title.length === 0) return;
+    setTasks((state) => [...state, { title, id: 4, isComplete: false }]);
+    setNewTask("");
+  };
+
+  const handleInputValue = (event: {
+    target: { value: SetStateAction<string> };
+  }) => {
+    setNewTask(event.target.value);
+  };
+
   return (
     <section className={styles.taskContainer}>
       <header className={styles.addTask}>
-        <input type="text" placeholder="Adicione uma nova tarefa" />
-        <button>
+        <input
+          value={newTask}
+          onChange={handleInputValue}
+          type="text"
+          placeholder="Adicione uma nova tarefa"
+          required
+        />
+        <button onClick={() => handleCreateTask(newTask)}>
           Criar
           <PlusCircle size={22} />
         </button>
