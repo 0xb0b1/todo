@@ -61,13 +61,10 @@
     flex-direction: column;
     gap: 0.75rem;
   }
-
-  li {}
 }
 
 .noCompleted,
 .completed {
-  display: flex;
   gap: 0.75rem;
   display: flex;
   justify-content: space-between;
@@ -76,11 +73,15 @@
   background: var(--gray-500);
   padding: 1rem;
 
+  >div {
+    display: flex;
+    gap: 0.75rem;
+  }
+
   svg {
     flex: none;
     color: var(--gray-300);
   }
-
 }
 
 .noCompleted {
