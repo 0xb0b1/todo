@@ -24,7 +24,7 @@
 body {
   font: 16px "Inter", Arial, sans-serif;
   color: var(--gray-100);
-  background: var(--gray-500);
+  background: var(--gray-600);
 }
 
 input,
@@ -44,4 +44,9 @@ input {
 
 li {
   list-style: none;
+}
+
+p,
+span {
+  line-height: 1.4;
 }

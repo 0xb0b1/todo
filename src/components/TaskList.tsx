@@ -1,5 +1,5 @@
-import { PlusCircle } from "phosphor-react";
-import { SetStateAction, useState } from "react";
+import { ClipboardText, PlusCircle, Trash } from "phosphor-react";
+import { SetStateAction, useCallback, useEffect, useState } from "react";
 import styles from "./tasklist.module.scss";
 
 interface Task {
@@ -9,23 +9,7 @@ interface Task {
 }
 
 export const TaskList = () => {
-  const [tasks, setTasks] = useState<Task[]>([
-    {
-      id: 0,
-      title: "Beber agua",
-      isComplete: false,
-    },
-    {
-      id: 1,
-      title: "Malhar",
-      isComplete: false,
-    },
-    {
-      id: 2,
-      title: "Ler 10min",
-      isComplete: false,
-    },
-  ]);
+  const [tasks, setTasks] = useState<Task[]>([]);
   const [newTask, setNewTask] = useState<string>("");
 
   const handleToggleTaskComplete = (id: number) => {
@@ -38,8 +22,15 @@ export const TaskList = () => {
 
   const handleCreateTask = (title: string) => {
     if (title.length === 0) return;
-    setTasks((state) => [...state, { title, id: 4, isComplete: false }]);
+    setTasks((state) => [
+      ...state,
+      { title, id: Math.floor(Math.random() * 100), isComplete: false },
+    ]);
     setNewTask("");
+  };
+
+  const handleRemoveTask = (id: number) => {
+    setTasks(tasks.filter((task) => task.id !== id));
   };
 
   const handleInputValue = (event: {
@@ -47,6 +38,16 @@ export const TaskList = () => {
   }) => {
     setNewTask(event.target.value);
   };
+
+  // const sortTasksByCompletion = useCallback(() => {
+  //   const completed = tasks.filter((item) => item.isComplete === true);
+  //   const toComplete = tasks.filter((item) => item.isComplete === false);
+  //   setTasks([...toComplete, ...completed]);
+  // }, [tasks]);
+
+  // useEffect(() => {
+  //   sortTasksByCompletion()
+  // }, [tasks]);
 
   return (
     <section className={styles.taskContainer}>
@@ -77,29 +78,39 @@ export const TaskList = () => {
           </p>
         </div>
 
-        <section className={tasks.length ? styles.tasks : styles.noTasks}>
-          <ul>
-            {tasks.map((task) => (
-              <li key={task.id}>
-                <div
+        {tasks.length ? (
+          <section className={styles.tasks}>
+            <ul>
+              {tasks.map((task) => (
+                <li
+                  key={task.id}
                   className={
                     task.isComplete ? styles.completed : styles.noCompleted
                   }
                 >
-                  <label htmlFor="">
-                    <input
-                      type="checkbox"
-                      checked={task.isComplete}
-                      readOnly
-                      onClick={() => handleToggleTaskComplete(task.id)}
-                    />
-                  </label>
-                  <p>{task.title}</p>
-                </div>
-              </li>
-            ))}
-          </ul>
-        </section>
+                  <div>
+                    <label htmlFor="">
+                      <input
+                        type="checkbox"
+                        checked={task.isComplete}
+                        readOnly
+                        onClick={() => handleToggleTaskComplete(task.id)}
+                      />
+                    </label>
+                    <p>{task.title}</p>
+                  </div>
+                  <Trash size={20} onClick={() => handleRemoveTask(task.id)} />
+                </li>
+              ))}
+            </ul>
+          </section>
+        ) : (
+          <section className={styles.noTasks}>
+            <ClipboardText size={72} color="#333" />
+            <p>Você ainda não tem tarefas cadastradas</p>
+            <span>Crie tarefas e organize seus itens a fazer</span>
+          </section>
+        )}
       </main>
     </section>
   );
