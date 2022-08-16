@@ -39,16 +39,6 @@ export const TaskList = () => {
     setNewTask(event.target.value);
   };
 
-  // const sortTasksByCompletion = useCallback(() => {
-  //   const completed = tasks.filter((item) => item.isComplete === true);
-  //   const toComplete = tasks.filter((item) => item.isComplete === false);
-  //   setTasks([...toComplete, ...completed]);
-  // }, [tasks]);
-
-  // useEffect(() => {
-  //   sortTasksByCompletion()
-  // }, [tasks]);
-
   return (
     <section className={styles.taskContainer}>
       <header className={styles.addTask}>
